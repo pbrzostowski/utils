@@ -11,6 +11,9 @@ ALIAS_LA := la
 # git-prune - removes all branches but master
 ALIAS_GIT_PRUNE := "gitp"
 
+# kubectl
+ALIAS_KUBECTL := "k"
+
 _bash_aliases_file:
 	@if [ ! -f $(BASH_ALIASES_FILE) ]; then \
 		echo "$(BASH_ALIASES_FILE) not found, creating..."; \
@@ -37,7 +40,12 @@ _bind_git_prune:
 	@AL="alias $(ALIAS_GIT_PRUNE)='git branch | grep -v "master" | xargs git branch -D'"; \
 	$(call _check_and_apply, "$$AL");
 
+_bind_kubectl:
+	@AL="alias $(ALIAS_KUBECTL)='kubectl'"; \
+	$(call _check_and_apply, "$$AL");
+
 bind_aliases: _bash_aliases_file \
 	_bind_ll \
 	_bind_la \
 	_bind_git_prune \
+	_bind_kubectl \
